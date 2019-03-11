@@ -1,0 +1,9 @@
+import pickle
+
+
+with open('test_hw_01_calcadv.ini.pkl', 'rb') as f:
+    data = pickle.load(f)
+
+data = pickle.load(f)
+with open('test_hw_01_listscan.ini.pkl', 'rb') as f:
+    data = pickle.load(f)
