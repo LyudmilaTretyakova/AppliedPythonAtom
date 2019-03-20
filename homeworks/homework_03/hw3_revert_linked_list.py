@@ -3,7 +3,6 @@
 
 
 def revert_linked_list(head):
-    
     if head is None:
         return head
     node = head

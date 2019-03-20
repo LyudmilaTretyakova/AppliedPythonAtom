@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+
 class TEventStats:
     FIVE_MIN = 300
 

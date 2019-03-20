@@ -19,4 +19,3 @@ def groupping_anagramms(words):
         return res
     except Exception:
         return res
-
