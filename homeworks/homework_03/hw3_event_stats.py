@@ -1,32 +1,38 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
 class TEventStats:
     FIVE_MIN = 300
 
     def __init__(self):
         # TODO: реализовать метод
-        raise NotImplementedError
+        self.reg_events = dict()
+        self.deq = []
+        self.count = 0
 
     def register_event(self, user_id, time):
-        """
-        Этот метод регистрирует событие активности пользователя.
-        :param user_id: идентификатор пользователя
-        :param time: время (timestamp)
-        :return: None
-        """
+
+        if user_id in self.reg_events.keys():
+            self.reg_events[user_id].append(time)
+
+        else:
+            self.reg_events[user_id] = [time]
+            count = 0
         # TODO: реализовать метод
-        raise NotImplementedError
 
     def query(self, count, time):
-        """
-        Этот метод отвечает на запросы.
-        Возвращает количество пользователей, которые за последние 5 минут
-        (на полуинтервале времени (time - 5 min, time]), совершили ровно count действий
-        :param count: количество действий
-        :param time: время для рассчета интервала
-        :return: activity_count: int
-        """
+        itog = 0
+        count1 = 0
         # TODO: реализовать метод
-        raise NotImplementedError
+        time1 = time-self.FIVE_MIN
+        for i in self.reg_events.keys():
+            if len(self.reg_events[i]) == count:
+                for ii in self.reg_events[i]:
+                    if ii > time1 and ii < time:
+                        count1 += 1
+            else:
+                count1 = -1
+            if count1 == count:
+                itog += 1
+            count1 = 0
+        return itog

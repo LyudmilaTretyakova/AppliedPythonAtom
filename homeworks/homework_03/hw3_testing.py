@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+import os
+import shutil
 
 class Requester:
     '''
@@ -44,30 +45,33 @@ class OrdinaryFileWorker(RemoteFileReader):
 
 
 class MockOrdinaryFileWorker(OrdinaryFileWorker):
-    '''
-    Необходимо отнаследовать данный класс так, чтобы
-     он вместо запросов на удаленный сервер:
-      при transfer_to_remote считывал filename
-     из локальной директории ./test_dir и сохранял filename.tmp
-     в локальной директории ./tmpf
-      при transfer_to_local считывал filename.tmp
-     из локальной директории ./test_dir и сохранял в filename
-     в локальной директории ./tmpf
-      при удалении объекта директория ./tmp должна удаляться
-      при создании объекта, директория ./tmp должна создаваться
-     если еще не создана
-    '''
+
     def __init__(self):
-        raise NotImplementedError
+        self.ptf = './tmpf/'
+        self.pt = './homeworks/homework_03/test_dir/'
+        self._host = None
+        self._port = None
+        if not os.path.exists(self.ptf):
+            os.makedirs(self.ptf)
+
+    def transfer_to_local(self, filename):
+        with open("%s%s%s" % (self.pt, filename, '.tmp')) as s:
+            with open(self.ptf + filename, 'w') as ss:
+                ss.writelines(s.read())
+
+    def __del__(self):
+        if os.path.exists(self.ptf):
+            shutil.rmtree(self.ptf)
+
+    def transfer_to_remote(self, filename):
+        with open(self.pt + filename) as s:
+            with open("%s%s%s" % (self.ptf, filename, '.tmp'), 'w') as ss:
+                ss.writelines(s.read())
 
 
 class LLNode:
     def __init__(self, value, next_node):
-        """
-        Entity (or node) for doubly linked list
-        :param value: object
-        :param next_node: LLEntity
-        """
+
         self.value = value
         self.next_node = next_node
 
